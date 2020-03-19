@@ -1,2 +1,2 @@
 # CoronavirusDataAPI
-A PHP API for getting cases, recovered, deaths cause COVID-19. Source: https://www.worldometers.info/coronavirus/
+A PHP API to get cases, recovered and deaths count cause COVID-19 virus. Source: https://www.worldometers.info/coronavirus/
