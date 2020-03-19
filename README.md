@@ -12,5 +12,5 @@ echo $covid->getDeaths("Italy"); // get deaths
 
 echo $covid->getRecorvered("Spain"); // get recovered
 
-echo $covid->getCountryCases(); // get all country infected covid-19
+var_dump($covid->getCountryCases()); // get all country infected covid-19
 ```
