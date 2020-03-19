@@ -11,17 +11,11 @@ class CoronavirusDataAPI {
         $stats = explode('<table', $stats);
         $stats = explode("</table>", $stats[1]);
         $str = "<html lang='en'><body><table". $stats[0]."</table></body></html>";
-        $str = str_replace('style="" role="row" class="even"', "", $str);
-        $str = str_replace('style="font-weight: bold; text-align:right"', "", $str);
-        $str = str_replace('style="font-weight: bold; text-align:right;background-color:#FFEEAA;"', "", $str);
-        $str = str_replace('style="font-weight: bold; text-align:right;background-color:red; color:white"', "", $str);
-        $str = str_replace('style="text-align:right;font-weight:bold;"', "", $str);
-        $str = str_replace('style="font-weight: bold; text-align:right"', "", $str);
-        $str = str_replace('style="font-weight: bold; font-size:15px; text-align:left;"', "", $str);
-        $str = str_replace('style="font-weight: bold; text-align:right"', "", $str);
-        $str = str_replace('style="color:#00B5F0; font-style:italic; "', "", $str);
+        $str = str_replace("style=", "class=", $str); // fix can't be loaded when DOMDocument->loadHTML();
+        $str = str_replace(",", "", $str);
+        $str = str_replace("+", "", $str);
         $dom = new DOMDocument;
-        $dom->loadHTML($str);
+        @$dom->loadHTML($str);
         $x = new DOMXpath($dom);
         $a = 0;
         $array = [];
@@ -38,8 +32,13 @@ class CoronavirusDataAPI {
         }
         $this->data = [];
         foreach($array as $val) {
-            if($val[3] == 0) $val[3] = 0;
-            if($val[5] == 0) $val[5] = 0;
+            if(strlen($val[3]) == 0) $val[3] = 0; // fix 0 is ""
+            if(strlen($val[5]) == 0) $val[5] = 0;
+            $val[1] = str_replace(" ", "", $val[1]); // fix non numeric integer
+            $val[3] = str_replace(" ", "", $val[3]);
+            $val[5] = str_replace(" ", "", $val[5]);
+            $val[2] = str_replace(" ", "", $val[2]);
+            $val[4] = str_replace(" ", "", $val[4]);
             $this->data[strtolower($val[0])] = [$val[1], $val[3], $val[5], $val[2], $val[4]];
         }
     }
@@ -64,7 +63,7 @@ class CoronavirusDataAPI {
         return $this->data[strtolower($country)][4];
     }
 
-    public function getAllCases() {
+    public function getAllCases() : int {
         $cases = 0;
         foreach($this->data as $val) {
             $cases += $val[0];
@@ -72,7 +71,7 @@ class CoronavirusDataAPI {
         return $cases;
     }
 
-    public function getAllTodayCases() {
+    public function getAllTodayCases() : int {
         $todayCases = 0;
         foreach($this->data as $val) {
             $todayCases += $val[3];
@@ -80,7 +79,7 @@ class CoronavirusDataAPI {
         return $todayCases;
     }
 
-    public function getAllTodayDeaths() {
+    public function getAllTodayDeaths() : int {
         $todayDeaths = 0;
         foreach($this->data as $val) {
             $todayDeaths += $val[4];
@@ -88,7 +87,7 @@ class CoronavirusDataAPI {
         return $todayDeaths;
     }
 
-    public function getAllDeaths() {
+    public function getAllDeaths() : int {
         $deaths = 0;
         foreach($this->data as $val) {
             $deaths += $val[1];
@@ -96,7 +95,7 @@ class CoronavirusDataAPI {
         return $deaths;
     }
 
-    public function getAllRecovered() {
+    public function getAllRecovered() : int {
         $recovered = 0;
         foreach($this->data as $val) {
             $recovered += $val[2];
@@ -121,3 +120,4 @@ class CoronavirusDataAPI {
         return $a;
     }
 }
+
