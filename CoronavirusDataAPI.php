@@ -40,7 +40,7 @@ class CoronavirusDataAPI {
         foreach($array as $val) {
             if($val[3] == 0) $val[3] = 0;
             if($val[5] == 0) $val[5] = 0;
-            $this->data[strtolower($val[0])] = [$val[1], $val[3], $val[5]];
+            $this->data[strtolower($val[0])] = [$val[1], $val[3], $val[5], $val[2], $val[4]];
         }
     }
 
@@ -54,6 +54,54 @@ class CoronavirusDataAPI {
 
     public function getRecovered(string $country) : int {
         return $this->data[strtolower($country)][2];
+    }
+
+    public function getTodayCases(string $country) : int {
+        return $this->data[strtolower($country)][3];
+    }
+
+    public function getTodayDeaths(string $country) : int {
+        return $this->data[strtolower($country)][4];
+    }
+
+    public function getAllCases() {
+        $cases = 0;
+        foreach($this->data as $val) {
+            $cases += $val[0];
+        }
+        return $cases;
+    }
+
+    public function getAllTodayCases() {
+        $todayCases = 0;
+        foreach($this->data as $val) {
+            $todayCases += $val[3];
+        }
+        return $todayCases;
+    }
+
+    public function getAllTodayDeaths() {
+        $todayDeaths = 0;
+        foreach($this->data as $val) {
+            $todayDeaths += $val[4];
+        }
+        return $todayDeaths;
+    }
+
+    public function getAllDeaths() {
+        $deaths = 0;
+        foreach($this->data as $val) {
+            $deaths += $val[1];
+        }
+        return $deaths;
+    }
+
+    public function getAllRecovered() {
+        $recovered = 0;
+        foreach($this->data as $val) {
+            $recovered += $val[2];
+        }
+        return $recovered;
     }
 
     public function getAll(string $country) : array {
@@ -73,4 +121,3 @@ class CoronavirusDataAPI {
         return $a;
     }
 }
-
