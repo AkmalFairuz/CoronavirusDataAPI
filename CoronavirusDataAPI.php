@@ -40,7 +40,7 @@ class CoronavirusDataAPI {
         foreach($array as $val) {
             if($val[3] == 0) $val[3] = 0;
             if($val[5] == 0) $val[5] = 0;
-            $this->data[strtolower($val[0])] = [$val[3], $val[5]];
+            $this->data[strtolower($val[0])] = [$val[1], $val[3], $val[5]];
         }
     }
 
@@ -49,11 +49,11 @@ class CoronavirusDataAPI {
     }
 
     public function getDeaths(string $country) : int {
-        return $this->data[strtolower($country)][3];
+        return $this->data[strtolower($country)][1];
     }
 
     public function getRecovered(string $country) : int {
-        return $this->data[strtolower($country)][5];
+        return $this->data[strtolower($country)][2];
     }
 
     public function getAll(string $country) : array {
