@@ -23,6 +23,7 @@ class CoronavirusDataAPI {
         foreach($x->query('//td') as $td){
             $str = $td->textContent;
             if($str == "Total:") break;
+            if($str == "World") continue;
             $array[$i][] = $str;
             $a++;
             if($a === 9) {
