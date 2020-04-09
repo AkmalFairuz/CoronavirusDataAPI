@@ -14,7 +14,7 @@ class CoronavirusDataAPI {
              ),
         );  
 
-        $stats = file_get_contents("https://www.worldometers.info/coronavirus/", $x);
+        $stats = file_get_contents("https://www.worldometers.info/coronavirus/", false, stream_context_create($x));
         $stats = explode('<table', $stats);
         $stats = explode("</table>", $stats[1]);
         $str = "<html lang='en'><body><table". $stats[0]."</table></body></html>";
