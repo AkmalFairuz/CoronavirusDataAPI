@@ -21,9 +21,9 @@ class CoronavirusDataAPI {
         $str = str_replace("style=", "class=", $str); // fix can't be loaded when DOMDocument->loadHTML();
         $str = str_replace(",", "", $str);
         $str = str_replace("+", "", $str);
-        $dom = new DOMDocument;
+        $dom = new \DOMDocument;
         @$dom->loadHTML($str);
-        $x = new DOMXpath($dom);
+        $x = new \DOMXpath($dom);
         $a = 0;
         $array = [];
         $i = 0;
