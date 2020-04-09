@@ -33,7 +33,7 @@ class CoronavirusDataAPI {
             if($str == "World") continue;
             $array[$i][] = $str;
             $a++;
-            if($a === 11) {
+            if($a === 12) {
                 $a = 0;
                 $i++;
             }
