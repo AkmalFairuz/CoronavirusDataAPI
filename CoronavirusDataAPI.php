@@ -7,7 +7,14 @@ class CoronavirusDataAPI {
 
     public function __construct()
     {
-        $stats = file_get_contents("https://www.worldometers.info/coronavirus/");
+        $x=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+             ),
+        );  
+
+        $stats = file_get_contents("https://www.worldometers.info/coronavirus/", $x);
         $stats = explode('<table', $stats);
         $stats = explode("</table>", $stats[1]);
         $str = "<html lang='en'><body><table". $stats[0]."</table></body></html>";
