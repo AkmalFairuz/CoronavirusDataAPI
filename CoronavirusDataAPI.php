@@ -15,9 +15,9 @@ class CoronavirusDataAPI {
         );  
 
         $stats = file_get_contents("https://www.worldometers.info/coronavirus/", false, stream_context_create($x));
-        $stats = explode('<table', $stats);
-        $stats = explode("</table>", $stats[1]);
-        $str = "<html lang='en'><body><table". $stats[0]."</table></body></html>";
+        $stats = explode('<tbody', $stats);
+        $stats = explode("</tbody>", $stats[1]);
+        $str = "<html lang='en'><body><table><thead></thead<tbody". $stats[0]."</tbody></table></body></html>";
         $str = str_replace("style=", "class=", $str); // fix can't be loaded when DOMDocument->loadHTML();
         $str = str_replace(",", "", $str);
         $str = str_replace("+", "", $str);
